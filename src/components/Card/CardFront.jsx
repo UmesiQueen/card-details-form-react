@@ -32,7 +32,18 @@ function CardFront(props) {
 
   return (
     <div className="card-front">
-      <img src="/images/card-logo.svg" alt="card-logo" className="logo" readOnly={true}/>
+      <img
+        src="/images/card-logo.svg"
+        alt="card-logo"
+        className="logo"
+        readOnly={true}
+      />
+
+      <div
+        className="card-type"
+        style={{ height: "2.5em", width: "3.5em", position: "absolute" }}
+      >
+      </div>
       {inputs.map((input) => {
         return <input key={input.id} {...input} />;
       })}

@@ -1,7 +1,8 @@
 .card {
   height: 250px;
   width: inherit;
-  background-image: url("./images/bg-main-mobile.png");
+  position: relative;
+  background-image: url("./images/background/bg-main-mobile.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -16,14 +17,14 @@
 }
 
 .card-back {
-  background-image: url("./images/bg-card-back.png");
+  background-image: url("./images/background/bg-card-back.png");
   top: 2em;
   right: 1em;
 }
 
 .card-front {
-  background-image: url("./images/bg-card-front.png");
-  top: 7.2em;
+  background-image: url("./images/background/bg-card-front.png");
+  bottom: -3em;
   left: 1em;
 }
 
@@ -32,7 +33,7 @@
   color: var(--White);
   border: none;
   pointer-events: none;
-  position: relative;
+  position: absolute;
   height: fit-content;
   letter-spacing: 1px;
   font-family: "Space Grotesk", sans-serif;
@@ -43,55 +44,61 @@
   color: var(--White);
 }
 
-.card input[name="name"] {
-  width: 15em;
-  top: 8em;
-  right: 3.5em;
+.card .logo {
+  width: 3.5em;
+  position: absolute;
+  top: 1em;
+  left: 1em;
+}
+
+.card-type {
+  position: absolute;
+  top: 1em;
+  right: 1em;
 }
 
 .card input[name="number"] {
-  top: 2em;
+  top: 4em;
   left: 0.8em;
   width: initial;
   font-size: 22px;
   font-weight: 600;
 }
 
+.card input[name="name"] {
+  width: 15em;
+  bottom: 2.5em;
+  left: 1em;
+}
+
 .card input[name="mm"] {
   text-align: right;
-  top: 4.1em;
-  left: 17.5em;
+  bottom: 2.5em;
+  right: 4em;
 }
 
 .card input[name="yy"] {
-  top: 4.1em;
-  left: 18em;
+  bottom: 2.5em;
+  right: 1.5em;
 }
 
 .card span {
-  position: relative;
-  top: 4.4em;
-  left: 17.3em;
+  position: absolute;
+  bottom: 3em;
+  right: 4em;
   color: var(--White);
   font-size: 12px;
 }
 
 .card input[name="cvc"] {
   text-align: center;
-  top: 5.2em;
-  left: 17em;
-}
-
-.card .logo {
-  width: 3.5em;
-  position: relative;
-  top: 1em;
-  left: 1em;
+  top: 5.5em;
+  right: 4em;
+  width: 2.5em;
 }
 
 .card input[name="mm"],
-.card input[name="yy"],
-.card input[name="cvc"] {
+.card input[name="yy"] {
   width: 2em;
 }
 
@@ -99,16 +106,16 @@
   .card {
     height: 100vh;
     width: 27%;
-    background-image: url("./images/bg-main-desktop.png");
+    background-image: url("./images/background/bg-main-desktop.png");
   }
 
   .card-back {
-    top: 55%;
-    left: 14%;
+    top: 55.5%;
+    left: 11rem;
   }
 
   .card-front {
-    top: 23%;
-    left: 10%;
+    bottom: 50%;
+    left: 8rem;
   }
 }
