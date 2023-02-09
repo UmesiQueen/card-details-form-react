@@ -1,8 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./Card.css";
 
 function CardFront(props) {
+  const [cardBgUrl, setCardBg] = useState({});
+
+  useEffect(() => {
+    const number = String(props.number);
+
+    number.startsWith("3")
+      ? setCardBg({
+          backgroundImage: "url('/images/card/amex.svg')",
+          width: "3.5em",
+        })
+      : number.startsWith("4")
+      ? setCardBg({
+          backgroundImage: "url('/images/card/visa.svg')",
+          width: "3.5em",
+        })
+      : number.startsWith("5")
+      ? setCardBg({
+          backgroundImage: "url('/images/card/mastercard.svg')",
+          width: "3.5em",
+        })
+      : number.startsWith("6")
+      ? setCardBg({
+          backgroundImage: "url('/images/card/discover.svg')",
+          width: "3.5em",
+        })
+      : setCardBg({});
+
+    // 3 (AMEX), 4 (Visa), 5 (MasterCard), or 6 (Discover).
+  }, [props.number]);
+
   const inputs = [
     {
       id: 1,
@@ -39,11 +69,7 @@ function CardFront(props) {
         readOnly={true}
       />
 
-      <div
-        className="card-type"
-        style={{ height: "2.5em", width: "3.5em", position: "absolute" }}
-      >
-      </div>
+      <div className="card-type" style={cardBgUrl}></div>
       {inputs.map((input) => {
         return <input key={input.id} {...input} />;
       })}

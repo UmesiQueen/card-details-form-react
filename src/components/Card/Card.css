@@ -52,9 +52,16 @@
 }
 
 .card-type {
+  height: 2.5em;
+  width: 0;
   position: absolute;
   top: 1em;
   right: 1em;
+  background-color: rgba(255, 255, 255, 0.368);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: width 1s linear;
 }
 
 .card input[name="number"] {
@@ -79,13 +86,13 @@
 
 .card input[name="yy"] {
   bottom: 2.5em;
-  right: 1.5em;
+  right: 1.35em;
 }
 
 .card span {
   position: absolute;
-  bottom: 3em;
-  right: 4em;
+  bottom: 2.85em;
+  right: 3.87em;
   color: var(--White);
   font-size: 12px;
 }
