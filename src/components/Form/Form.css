@@ -1,0 +1,69 @@
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-top: 4em;
+}
+
+form input {
+  height: 2.5em;
+  padding: 0 10px;
+  border: 1px solid var(--Light_grayish_violet);
+  border-radius: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+form input:-webkit-autofill,
+form input:-webkit-autofill:hover,
+form input:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+form input::-webkit-input-placeholder {
+  color: var(--Light_grayish_violet);
+}
+
+form input[focus="true"] {
+  border: none;
+  outline: 1px solid red;
+}
+
+form .grid-container {
+  display: grid;
+  grid-template-columns: 23.5% 23.5% 48.5%;
+  column-gap: 2.25%;
+  align-items: start;
+}
+
+form .grid-container div:first-child label {
+  width: 10em;
+}
+
+form .grid-container div:first-child + div label {
+  visibility: hidden;
+}
+
+form .error {
+  color: red;
+  font-size: 10px;
+  padding: 3px 3px 0;
+}
+
+@media screen and (min-width: 768px) {
+  .form {
+    width: 73%;
+    margin: 0;
+  }
+
+  form {
+    width: 325px;
+    height: 100%;
+    margin: auto;
+    margin-left: 40%;
+    justify-content: center;
+    padding: 0;
+  }
+}

@@ -1,38 +1,32 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
+
+:root {
+  --White: hsl(0, 0%, 100%);
+  --Light_grayish_violet: hsl(270, 3%, 87%);
+  --Dark_grayish_violet: hsl(279, 6%, 55%);
+  --Very_dark_violet: hsl(278, 68%, 11%);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html {
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
 }
 
-.App-link {
-  color: #61dafb;
+.app {
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media screen and (min-width: 768px) {
+  .app{
+    display: flex;
   }
 }

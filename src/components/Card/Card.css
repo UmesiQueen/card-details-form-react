@@ -1,0 +1,114 @@
+.card {
+  height: 250px;
+  width: inherit;
+  background-image: url("./images/bg-main-mobile.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card-back,
+.card-front {
+  width: 17em;
+  height: 10em;
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.card-back {
+  background-image: url("./images/bg-card-back.png");
+  top: 2em;
+  right: 1em;
+}
+
+.card-front {
+  background-image: url("./images/bg-card-front.png");
+  top: 7.2em;
+  left: 1em;
+}
+
+.card input {
+  background-color: transparent;
+  color: var(--White);
+  border: none;
+  pointer-events: none;
+  position: relative;
+  height: fit-content;
+  letter-spacing: 1px;
+  font-family: "Space Grotesk", sans-serif;
+  text-transform: uppercase;
+}
+
+.card input::-webkit-input-placeholder {
+  color: var(--White);
+}
+
+.card input[name="name"] {
+  width: 15em;
+  top: 8em;
+  right: 3.5em;
+}
+
+.card input[name="number"] {
+  top: 2em;
+  left: 0.8em;
+  width: initial;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.card input[name="mm"] {
+  text-align: right;
+  top: 4.1em;
+  left: 17.5em;
+}
+
+.card input[name="yy"] {
+  top: 4.1em;
+  left: 18em;
+}
+
+.card span {
+  position: relative;
+  top: 4.4em;
+  left: 17.3em;
+  color: var(--White);
+  font-size: 12px;
+}
+
+.card input[name="cvc"] {
+  text-align: center;
+  top: 5.2em;
+  left: 17em;
+}
+
+.card .logo {
+  width: 3.5em;
+  position: relative;
+  top: 1em;
+  left: 1em;
+}
+
+.card input[name="mm"],
+.card input[name="yy"],
+.card input[name="cvc"] {
+  width: 2em;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    height: 100vh;
+    width: 27%;
+    background-image: url("./images/bg-main-desktop.png");
+  }
+
+  .card-back {
+    top: 55%;
+    left: 14%;
+  }
+
+  .card-front {
+    top: 23%;
+    left: 10%;
+  }
+}
