@@ -5,6 +5,15 @@ form {
   margin-top: 4em;
 }
 
+form label {
+  margin: 0.5em 0;
+  color: hsl(278, 68%, 11%);
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
 form input {
   height: 2.5em;
   padding: 0 10px;
@@ -26,30 +35,34 @@ form input::-webkit-input-placeholder {
   color: var(--Light_grayish_violet);
 }
 
-form input[focus="true"] {
-  border: none;
-  outline: 1px solid red;
-}
-
 form .grid-container {
   display: grid;
-  grid-template-columns: 23.5% 23.5% 48.5%;
+  grid-template-columns: 48.5% 48.5%;
   column-gap: 2.25%;
   align-items: start;
 }
 
-form .grid-container div:first-child label {
-  width: 10em;
+.expiry {
+  display: inherit;
+  justify-content: space-between;
 }
 
-form .grid-container div:first-child + div label {
-  visibility: hidden;
+.expiry input {
+  width: 48%;
 }
 
 form .error {
-  color: red;
+  color: rgb(237, 94, 94);
   font-size: 10px;
   padding: 3px 3px 0;
+}
+
+.invalid {
+  box-shadow: 0 0 0 1.5px rgb(237, 94, 94);
+}
+
+input:focus {
+  outline: none;
 }
 
 @media screen and (min-width: 768px) {

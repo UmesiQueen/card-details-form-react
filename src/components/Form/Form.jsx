@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Input from "../Input/Input";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import Button from "../Button/Button";
 
 import "./Form.css";
@@ -14,226 +17,56 @@ function Form(props) {
   };
   const [formValues, setValues] = useState(initialValues);
   const [isValid, setValid] = useState(false);
-  const [submitClicked, setSubmit] = useState(false);
-  const [errorMsg, setErrorMsg] = useState({});
-  const [focus, setFocus] = useState({});
+  const [isSubmitted, setSubmitted] = useState(false);
 
-  // send props to card onChange in App.js
+  const schema = yup.object().shape({
+    name: yup.string().required("Can't be blank"),
+    number: yup
+      .string()
+      .required("Can't be blank")
+      .matches(/^[3456]/, "No such Issuer")
+      .min(13, "Invalid card number"),
+    mm: yup
+      .string()
+      .required("Can't be blank")
+      .matches(/^(0?[1-9]|1[012])$/, "Invalid date format"),
+    yy: yup.string().required("Can't be blank").min(2, "Invalid date format"),
+    cvc: yup
+      .string()
+      .required("Can't be blank")
+      .min(3, "Wrong Format, must be 3 digits"),
+  });
+
+  const {
+    handleSubmit,
+    register,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({ defaultValues: initialValues, resolver: yupResolver(schema) });
+
+  //Reset to default values
+  useEffect(() => {
+    if (isSubmitted) {
+      reset();
+      setSubmitted(false);
+    }
+  }, [reset, isSubmitted]);
+
   useEffect(() => {
     props.onChange(formValues);
   });
 
-  // onSubmit click
+  //getValues
   useEffect(() => {
-    if (Object.keys(errorMsg).length === 0 && submitClicked) {
-      setValid(true);
-    }
-  }, [errorMsg, submitClicked]);
-
-  // input props
-  const inputs = [
-    {
-      id: 1,
-      name: "name",
-      header: "Cardholder Name",
-      placeholder: "e.g. Jane Appleseed",
-      maxLength: 22,
-      error: errorMsg.name,
-      focus: focus.name,
-    },
-    {
-      id: 2,
-      name: "number",
-      header: "Card Number",
-      placeholder: "e.g. 1234 5678 9123 0000",
-      maxLength: 19,
-      error: errorMsg.number,
-      focus: focus.number,
-    },
-  ];
-
-  const dateCVC = [
-    {
-      id: 3,
-      name: "mm",
-      header: "EXP.DATE (MM/YY)",
-      placeholder: "MM",
-      maxLength: 2,
-      error: errorMsg.expiry,
-      focus: focus.expiry,
-    },
-    {
-      id: 4,
-      name: "yy",
-      header: "YY",
-      placeholder: "YY",
-      maxLength: 2,
-      focus: focus.expiry,
-    },
-    {
-      id: 5,
-      name: "cvc",
-      header: "CVC",
-      placeholder: "e.g. 123",
-      maxLength: 3,
-      error: errorMsg.cvc,
-      focus: focus.cvc,
-    },
-  ];
-
-  // validate input
-  const validateForm = (formValues) => {
-    let errors = {};
-    let focus = {};
-    const { name, number, mm, yy, cvc } = formValues;
-
-    if (name.length <= 0) {
-      errors.name = "Can't be blank";
-      focus.name = "true";
-    }
-
-    //number validation
-    if (number.length < 13) {
-      errors.number = "Invalid card number";
-      focus.number = "true";
-    }
-    let type = [3, 4, 5, 6]; // The card number doesn’t start with a 3 (AMEX), 4 (Visa), 5 (MasterCard), or 6 (Discover).
-    if (!type.some((num) => number.startsWith(num))) {
-      errors.number = "No such issuer";
-      focus.number = "true";
-    }
-    if (number.length < 1) {
-      errors.number = "Can't be blank";
-      focus.number = "true";
-    }
-
-    // cvc validation
-    if (cvc.length < 3) {
-      errors.cvc = "Wrong format, must be 3 digits";
-      focus.cvc = "true";
-    }
-    if (cvc.length < 1) {
-      errors.cvc = "Can't be blank";
-      focus.cvc = "true";
-    }
-
-    //date validation
-    if (Number(mm) < 1 || Number(mm) > 12) {
-      errors.expiry = "Invalid date";
-      focus.expiry = "true";
-    }
-
-    const date = new Date();
-    let currentMM = date.getMonth() + 1;
-    let currentYY = String(date.getFullYear()).slice(2);
-
-    if (Number(mm) < currentMM || Number(yy) < Number(currentYY)) {
-      // check
-      errors.expiry = "Expired card";
-      focus.expiry = "true";
-    }
-
-    if (mm.length < 1 || yy.length < 1) {
-      errors.expiry = "Can't be blank";
-      focus.expiry = "true";
-    }
-
-    return { errors, focus };
-  };
-
-  // const validateForm = (e) => {
-  //   let errors = {};
-  //   let focus = {};
-  //   const { name, value } = e.target;
-
-  //   switch (name) {
-  //     case "name":
-  //       if (value.length <= 0) {
-  //         errors.name = "Can't be blank";
-  //         focus.name = "true";
-  //       }
-  //       break;
-  //     case "number":
-  //       //number validation
-  //       if (value.length < 13) {
-  //         errors.number = "Invalid card number";
-  //         focus.number = "true";
-  //       }
-  //       let type = [3, 4, 5, 6]; // The card number doesn’t start with a 3 (AMEX), 4 (Visa), 5 (MasterCard), or 6 (Discover).
-  //       if (!type.some((num) => value.startsWith(num))) {
-  //         errors.number = "No such issuer";
-  //         focus.number = "true";
-  //       }
-  //       if (value.length < 1) {
-  //         errors.number = "Can't be blank";
-  //         focus.number = "true";
-  //       }
-  //       break;
-  //     case "mm":
-  //       if (Number(value) < 1 || Number(value) > 12) {
-  //         errors.expiry = "Invalid date";
-  //         focus.expiry = "true";
-  //       }
-  //       break;
-  //     case "yy":
-  //       break;
-  //     case "cvc":
-  //       // cvc validation
-  //       if (value.length < 3) {
-  //         errors.cvc = "Wrong format, must be 3 digits";
-  //         focus.cvc = "true";
-  //       }
-  //       if (value.length < 1) {
-  //         errors.cvc = "Can't be blank";
-  //         focus.cvc = "true";
-  //       }
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
-  //   //date validation
-
-  //   // const date = new Date();
-  //   // let currentMM = date.getMonth() + 1;
-  //   // let currentYY = String(date.getFullYear()).slice(2);
-
-  //   // if (Number(mm) < currentMM || Number(yy) < Number(currentYY)) {
-  //   //   // check
-  //   //   errors.expiry = "Expired card";
-  //   //   focus.expiry = "true";
-  //   // }
-
-  //   // if (mm.length < 1 || yy.length < 1) {
-  //   //   errors.expiry = "Can't be blank";
-  //   //   focus.expiry = "true";
-  //   // }
-
-  //   return { errors, focus };
-  // };
-
-  // Set formValues on change
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...formValues,
-      [name]:
-        name === "number" && value.length > 0
-          ? (e.target.value = formatNumber(value))
-          : name === "mm" || name === "yy"
-          ? String(value).padStart(2, "0")
-          : value, //check better way to do this
+    const subscription = watch((value, name) => {
+      setValues({
+        ...value,
+        [name]: value,
+      });
     });
-  };
-
-  //Format Number after every 4 digits
-  const formatNumber = (value) => {
-    return String(value)
-      .match(/.{1,4}/g)
-      .join(" ");
-  };
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   // Accept only digits onInput
   const patternRegex = (e) => {
@@ -241,62 +74,134 @@ function Form(props) {
     name !== "name" && (e.target.value = value.replace(/[^0-9+]/g, ""));
   };
 
-  const propMethods = {
-    onChange: handleChange,
-    onInput: patternRegex,
+  const submit = () => {
+    setValid(true);
+    console.log("Submitted");
+  };
+
+  const style = {
+    div: {
+      display: "flex",
+      flexDirection: "column",
+      margin: "5px 0",
+    },
   };
 
   return (
     <div className="form">
-      <form
-        onSubmit={(e) => {
-          setSubmit(true);
-          const { errors, focus } = validateForm(formValues);
-          setErrorMsg(errors);
-          setFocus(focus);
-          e.preventDefault();
-        }}
-        noValidate={true}
-      >
-        {!isValid ? (
-          <div>
-            {inputs.map((input) => {
-              return <Input key={input.id} {...input} {...propMethods} />;
-            })}
-            <div className="grid-container">
-              {dateCVC.map((input) => {
-                return <Input key={input.id} {...input} {...propMethods} />;
-              })}
-            </div>
-            <Button text="Confirm" />
-          </div>
-        ) : (
-          <div style={{ textAlign: "center" }}>
-            <img src="/images/icon-complete.svg" alt="icon-complete" />
-            <h1
-              style={{
-                textTransform: "uppercase",
-                color: "hsl(278, 68%, 11%)",
-                margin: ".5em 0",
-              }}
-            >
-              Thank You!
-            </h1>
-            <p style={{ color: " hsl(279, 6%, 55%)", marginBottom: "1em" }}>
-              We've added your card card details
-            </p>
-            <Button
-              text="Continue"
-              onClick={() => {
-                setValid(false);
-                setSubmit(false);
-                setValues(initialValues);
-                setErrorMsg({});
-              }}
+      {!isValid ? (
+        <form
+          onSubmit={handleSubmit(submit)}
+          noValidate={true}
+        >
+          <div style={style.div}>
+            <label htmlFor="name">Cardholder Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="e.g. Jane Appleseed"
+              maxLength={22}
+              {...register("name")}
+              className={errors.name ? "invalid" : ""}
             />
+            <p className="error">{errors.name?.message}</p>
           </div>
-        )}
-      </form>
+
+          <div style={style.div}>
+            <label htmlFor="number">Card Number</label>
+            <input
+              type="text"
+              name="number"
+              id="number"
+              placeholder="e.g. 1234 5678 9123 0000"
+              maxLength={19}
+              onInput={patternRegex}
+              {...register("number")}
+              className={errors.number ? "invalid" : ""}
+            />
+            <p className="error">{errors.number?.message}</p>
+          </div>
+
+          <div className="grid-container">
+            <div style={style.div}>
+              <label htmlFor="mm">Exp.Date (MM/YY)</label>
+              <div className="expiry">
+                <input
+                  type="text"
+                  name="mm"
+                  id="mm"
+                  placeholder="MM"
+                  maxLength={2}
+                  onInput={patternRegex}
+                  {...register("mm")}
+                  className={errors.mm ? "invalid" : ""}
+                />
+
+                <input
+                  type="text"
+                  name="yy"
+                  id="yy"
+                  placeholder="YY"
+                  maxLength={2}
+                  onInput={patternRegex}
+                  {...register("yy")}
+                  className={errors.yy ? "invalid" : ""}
+                />
+              </div>
+
+              {/* on error for two */}
+              <p className="error">
+                {errors.mm?.message || errors.yy?.message}
+              </p>
+            </div>
+
+            <div style={style.div}>
+              <label htmlFor="cvc">cvc</label>
+              <input
+                type="text"
+                name="cvc"
+                id="cvc"
+                placeholder="e.g. 123"
+                maxLength={3}
+                onInput={patternRegex}
+                {...register("cvc")}
+                className={errors.cvc ? "invalid" : ""}
+              />
+              <p className="error">{errors.cvc?.message}</p>
+            </div>
+          </div>
+          <Button text="Confirm" />
+        </form>
+      ) : (
+        <form style={{ alignItems: "center" }}>
+          <img
+            src="/images/icon-complete.svg"
+            width="100px"
+            height="100px"
+            alt="icon-complete"
+          />
+          <h1
+            style={{
+              textTransform: "uppercase",
+              color: "hsl(278, 68%, 11%)",
+              margin: ".5em 0",
+            }}
+          >
+            Thank You!
+          </h1>
+          <p style={{ color: " hsl(279, 6%, 55%)", marginBottom: "1em" }}>
+            We've added your card card details
+          </p>
+          <Button
+            text="Continue"
+            onClick={() => {
+              setValid(false);
+              setSubmitted(true);
+            }}
+          />
+        </form>
+      )}
     </div>
   );
 }
