@@ -1,18 +1,21 @@
 .card {
   height: 250px;
-  width: inherit;
   position: relative;
   background-image: url("./images/background/bg-main-mobile.png");
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 
 .card-back,
 .card-front {
-  width: 17em;
-  height: 10em;
+  width: 15em;
+  height: 9.5em;
+  border-radius: 7px;
+  padding: 15px;
   position: absolute;
-  background-size: contain;
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
@@ -26,6 +29,9 @@
   background-image: url("./images/background/bg-card-front.png");
   bottom: -3em;
   left: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card input {
@@ -33,7 +39,6 @@
   color: var(--White);
   border: none;
   pointer-events: none;
-  position: absolute;
   height: fit-content;
   letter-spacing: 1px;
   font-family: "Space Grotesk", sans-serif;
@@ -44,69 +49,46 @@
   color: var(--White);
 }
 
-.card .logo {
-  width: 3.5em;
-  position: absolute;
-  top: 1em;
-  left: 1em;
-}
-
 .card-type {
-  height: 2.5em;
+  height: 2.2em;
   width: 0;
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  background-color: rgba(255, 255, 255, 0.368);
+  float: right;
+  background-color: rgba(255, 255, 255, 0.135);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   transition: width 1s linear;
+  margin-top: 5px;
 }
 
 .card input[name="number"] {
-  top: 4em;
-  left: 0.8em;
-  width: initial;
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 600;
+  margin-bottom: 10px;
+  width: 100%;
+  letter-spacing: .5px;
 }
 
 .card input[name="name"] {
   width: 15em;
-  bottom: 2.5em;
-  left: 1em;
-}
-
-.card input[name="mm"] {
-  text-align: right;
-  bottom: 2.5em;
-  right: 4em;
-}
-
-.card input[name="yy"] {
-  bottom: 2.5em;
-  right: 1.35em;
-}
-
-.card span {
-  position: absolute;
-  bottom: 2.85em;
-  right: 3.87em;
-  color: var(--White);
-  font-size: 12px;
 }
 
 .card input[name="cvc"] {
   text-align: center;
-  top: 5.5em;
-  right: 4em;
+  position: absolute;
+  top: 5.8em;
+  right: 3.5em;
   width: 2.5em;
+}
+
+li {
+  list-style: none;
 }
 
 .card input[name="mm"],
 .card input[name="yy"] {
-  width: 2em;
+  width: 1.7em;
+  padding: 0 2px;
 }
 
 @media screen and (min-width: 768px) {
@@ -118,11 +100,30 @@
 
   .card-back {
     top: 55.5%;
-    left: 11rem;
+    left: 8rem;
   }
 
   .card-front {
     bottom: 50%;
+    left: 4rem;
+  }
+
+  .card-back,
+  .card-front {
+    width: 16.5em;
+  }
+  .card input[name="number"] {
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card-back {
+    left: 11rem;
+  }
+
+  .card-front {
     left: 8rem;
   }
 }

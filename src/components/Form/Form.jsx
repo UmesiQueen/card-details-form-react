@@ -6,6 +6,7 @@ import * as yup from "yup";
 import Button from "../Button/Button";
 
 import "./Form.css";
+import completeIcon from "./images/icon-complete.svg";
 
 function Form(props) {
   const initialValues = {
@@ -36,6 +37,7 @@ function Form(props) {
       .required("Can't be blank")
       .min(3, "Wrong Format, must be 3 digits"),
   });
+  // add expired card method
 
   const {
     handleSubmit,
@@ -51,6 +53,7 @@ function Form(props) {
       reset();
       setSubmitted(false);
     }
+    //clear all errors
   }, [reset, isSubmitted]);
 
   useEffect(() => {
@@ -76,7 +79,6 @@ function Form(props) {
 
   const submit = () => {
     setValid(true);
-    console.log("Submitted");
   };
 
   const style = {
@@ -90,10 +92,7 @@ function Form(props) {
   return (
     <div className="form">
       {!isValid ? (
-        <form
-          onSubmit={handleSubmit(submit)}
-          noValidate={true}
-        >
+        <form onSubmit={handleSubmit(submit)} noValidate={true}>
           <div style={style.div}>
             <label htmlFor="name">Cardholder Name</label>
             <input
@@ -116,7 +115,12 @@ function Form(props) {
               id="number"
               placeholder="e.g. 1234 5678 9123 0000"
               maxLength={19}
-              onInput={patternRegex}
+              onInput={(e) => {
+                patternRegex(e);
+                e.target.value = e.target.value
+                  .replace(/(\d{4})/g, "$1 ")
+                  .trim();
+              }}
               {...register("number")}
               className={errors.number ? "invalid" : ""}
             />
@@ -176,9 +180,9 @@ function Form(props) {
       ) : (
         <form style={{ alignItems: "center" }}>
           <img
-            src="/images/icon-complete.svg"
-            width="100px"
-            height="100px"
+            src={completeIcon}
+            width="90px"
+            height="90px"
             alt="icon-complete"
           />
           <h1
@@ -190,8 +194,14 @@ function Form(props) {
           >
             Thank You!
           </h1>
-          <p style={{ color: " hsl(279, 6%, 55%)", marginBottom: "1em" }}>
-            We've added your card card details
+          <p
+            style={{
+              color: " hsl(279, 6%, 55%)",
+              textAlign: "center",
+              marginBottom: "1em",
+            }}
+          >
+            We've added your card details
           </p>
           <Button
             text="Continue"

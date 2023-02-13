@@ -10,7 +10,7 @@ form label {
   color: hsl(278, 68%, 11%);
   font-weight: 600;
   letter-spacing: 1px;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
@@ -45,6 +45,7 @@ form .grid-container {
 .expiry {
   display: inherit;
   justify-content: space-between;
+  align-items: center;
 }
 
 .expiry input {
@@ -61,10 +62,6 @@ form .error {
   box-shadow: 0 0 0 1.5px rgb(237, 94, 94);
 }
 
-input:focus {
-  outline: none;
-}
-
 @media screen and (min-width: 768px) {
   .form {
     width: 73%;
@@ -78,5 +75,8 @@ input:focus {
     margin-left: 40%;
     justify-content: center;
     padding: 0;
+  }
+  form label{
+    font-size: 14px;
   }
 }
